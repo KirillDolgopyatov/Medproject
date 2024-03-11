@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>853</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Оценка показателей пострадавшего по методике SORT</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QWidget" name="main" native="true">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(116, 179, 255);</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QFrame" name="frame">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QScrollArea" name="scrollArea">
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="scrollAreaWidgetContents">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>813</width>
+               <height>501</height>
+              </rect>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_5">
+              <item>
+               <widget class="QToolBox" name="toolBox">
+                <property name="currentIndex">
+                 <number>3</number>
+                </property>
+                <widget class="QWidget" name="page_3">
+                 <property name="geometry">
+                  <rect>
+                   <x>0</x>
+                   <y>0</y>
+                   <width>795</width>
+                   <height>363</height>
+                  </rect>
+                 </property>
+                 <attribute name="label">
+                  <string>Пациенты I степени</string>
+                 </attribute>
+                 <layout class="QVBoxLayout" name="verticalLayout_6">
+                  <item>
+                   <widget class="QTableWidget" name="tableWidget_4">
+                    <column>
+                     <property name="text">
+                      <string>ФИО</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>Дата поступления</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>Возраст</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>АД</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>ЧД</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>ШГ</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>SpO2</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>Оп</string>
+                     </property>
+                    </column>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QWidget" name="page_4">
+                 <property name="geometry">
+                  <rect>
+                   <x>0</x>
+                   <y>0</y>
+                   <width>795</width>
+                   <height>363</height>
+                  </rect>
+                 </property>
+                 <attribute name="label">
+                  <string>Пациенты II степени</string>
+                 </attribute>
+                 <layout class="QVBoxLayout" name="verticalLayout_7">
+                  <item>
+                   <widget class="QTableWidget" name="tableWidget_5">
+                    <column>
+                     <property name="text">
+                      <string>ФИО</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>Дата поступления</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>Возраст</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>АД</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>ЧД</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>ШГ</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>SpO2</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>Оп</string>
+                     </property>
+                    </column>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QWidget" name="page_6">
+                 <attribute name="label">
+                  <string>Пациенты III степени</string>
+                 </attribute>
+                 <layout class="QVBoxLayout" name="verticalLayout_8">
+                  <item>
+                   <widget class="QTableWidget" name="tableWidget_6">
+                    <column>
+                     <property name="text">
+                      <string>ФИО</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>Дата поступления</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>Возраст</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>АД</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>ЧД</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>ШГ</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>SpO2</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>Оп</string>
+                     </property>
+                    </column>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QWidget" name="page_5">
+                 <attribute name="label">
+                  <string>Пациенты IV степени</string>
+                 </attribute>
+                 <layout class="QVBoxLayout" name="verticalLayout_9">
+                  <item>
+                   <widget class="QTableWidget" name="tableWidget_7">
+                    <column>
+                     <property name="text">
+                      <string>ФИО</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>Дата поступления</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>Возраст</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>АД</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>ЧД</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>ШГ</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>SpO2</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>Оп</string>
+                     </property>
+                    </column>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="frame_2">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QPushButton" name="pushButton">
+            <property name="text">
+             <string>Добавить поступившего пациента</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
