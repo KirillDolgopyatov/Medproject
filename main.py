@@ -1,10 +1,11 @@
 import sqlite3
-import sys  # Импорт системного модуля
+import sys
 
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget
+from PyQt5.uic.properties import QtWidgets
 
 from form import Ui_Form
-from med import Ui_MainWindow  # Импорт дизайна интерфейса, созданного в Qt Designer
+from med import Ui_MainWindow
 
 
 class Form(QWidget):
@@ -12,14 +13,19 @@ class Form(QWidget):
         super().__init__()
         self.ui = Ui_Form()
         self.ui.setupUi(self)
+        self.ui.dateTimeEdit.setCalendarPopup(True)
+        self.ui.pushButton.clicked.connect(self.add_patient)
+
+    def add_patient(self):
+        pass
 
 
-class MainWindow(QMainWindow):  # Определение класса MainWindow, наследующего QMainWindow
+class MainWindow(QMainWindow):
     def __init__(self):
-        super().__init__()  # Вызов конструктора базового класса
+        super().__init__()
         self.login_form = None
-        self.ui = Ui_MainWindow()  # Создание экземпляра дизайна интерфейса
-        self.ui.setupUi(self)  # Настройка интерфейса в текущем окне
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
 
         self.ui.pushButton.clicked.connect(self.openLoginForm)
 
@@ -27,18 +33,20 @@ class MainWindow(QMainWindow):  # Определение класса MainWindow
         self.cursor = self.conn.cursor()
 
         self.cursor.execute(
-            '''CREATE TABLE IF NOT EXISTS table_data_4 (id INTEGER PRIMARY KEY, column1 TEXT, column2 TEXT, 
-            column3 TEXT, column4 TEXT, column5 TEXT, column6 TEXT, column7 TEXT, column8 TEXT)''')
+            '''CREATE TABLE IF NOT EXISTS table_I (id INTEGER PRIMARY KEY, ФИО TEXT, Дата поступления TEXT, 
+            Возраст TEXT, АД TEXT, ЧД TEXT, ШГ TEXT, SpO2 TEXT, Оп TEXT)''')
         self.cursor.execute(
-            '''CREATE TABLE IF NOT EXISTS table_data_5 (id INTEGER PRIMARY KEY, column1 TEXT, 
-            column2 TEXT, column3 TEXT, column4 TEXT, column5 TEXT, column6 TEXT, column7 TEXT, column8 TEXT)''')
+            '''CREATE TABLE IF NOT EXISTS table_II (id INTEGER PRIMARY KEY,ФИО TEXT, Дата поступления TEXT, 
+            Возраст TEXT, АД TEXT, ЧД TEXT, ШГ TEXT, SpO2 TEXT, Оп TEXT)''')
         self.cursor.execute(
-            '''CREATE TABLE IF NOT EXISTS table_data_6 (id INTEGER PRIMARY KEY, column1 TEXT, 
-            column2 TEXT, column3 TEXT, column4 TEXT, column5 TEXT, column6 TEXT, column7 TEXT, column8 TEXT)''')
+            '''CREATE TABLE IF NOT EXISTS table_III (id INTEGER PRIMARY KEY, ФИО TEXT, Дата поступления TEXT, 
+            Возраст TEXT, АД TEXT, ЧД TEXT, ШГ TEXT, SpO2 TEXT, Оп TEXT)''')
         self.cursor.execute(
-            '''CREATE TABLE IF NOT EXISTS table_data_7 (id INTEGER PRIMARY KEY, column1 TEXT, 
-            column2 TEXT, column3 TEXT, column4 TEXT, column5 TEXT, column6 TEXT, column7 TEXT, column8 TEXT)''')
+            '''CREATE TABLE IF NOT EXISTS table_IV (id INTEGER PRIMARY KEY, ФИО TEXT, Дата поступления TEXT, 
+            Возраст TEXT, АД TEXT, ЧД TEXT, ШГ TEXT, SpO2 TEXT, Оп TEXT)''')
         self.conn.commit()
+
+        self.load_data_from_sqlite()
 
     def save_table_data(self, tableWidget, table_name):
         rowCount = tableWidget.rowCount()
@@ -55,6 +63,33 @@ class MainWindow(QMainWindow):  # Определение класса MainWindow
             placeholders = ', '.join(['?'] * len(row_data))
             self.cursor.execute(f"INSERT INTO {table_name} VALUES (NULL, {placeholders})", row_data)
         self.conn.commit()
+
+    def load_data_from_sqlite(self):
+        # Подключение к базе данных
+        connection = sqlite3.connect('patients_data.db')
+        cursor = connection.cursor()
+
+        # Словарь для сопоставления имен таблиц с виджетами таблиц в UI
+        table_widgets = {
+            'table_I': self.ui.tableWidget_4,
+            'table_II': self.ui.tableWidget_5,
+            'table_III': self.ui.tableWidget_6,
+            'table_IV': self.ui.tableWidget_7,
+        }
+
+        for table_name, table_widget in table_widgets.items():
+            cursor.execute(f"SELECT * FROM {table_name}")
+            rows = cursor.fetchall()
+            table_widget.setRowCount(0)  # Очистка таблицы перед заполнением
+
+            for row in rows:
+                row_position = table_widget.rowCount()
+                table_widget.insertRow(row_position)
+                for column, item in enumerate(row):
+                    table_widget.setItem(row_position, column, QtWidgets.QTableWidgetItem(str(item)))
+
+        # Закрытие соединения с базой данных
+        connection.close()
 
     def openLoginForm(self):
         self.login_form = Form()
