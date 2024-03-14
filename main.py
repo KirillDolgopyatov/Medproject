@@ -2,7 +2,7 @@ import sqlite3
 import sys
 
 from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget
+from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QTableWidgetItem
 from PyQt5.uic.properties import QtWidgets
 
 from form import Ui_Form
@@ -169,9 +169,23 @@ class MainWindow(QMainWindow):
         self.login_form.show()
 
     def handle_data(self, sum_bal, values_list):
-        # Здесь вы можете использовать sum_bal и values_list как нужно
-        print(sum_bal, values_list)  # Пример использования
+        # Определяем, в какую таблицу добавлять данные
+        if sum_bal > 21:
+            table_widget = self.ui.tableWidget_6
+        elif 16 <= sum_bal <= 21:
+            table_widget = self.ui.tableWidget_5
+        elif 6 <= sum_bal <= 15:
+            table_widget = self.ui.tableWidget_4
+        else:  # sum_bal 0-5
+            table_widget = self.ui.tableWidget_7
 
+        # Добавляем новую строку в конец таблицы
+        row_position = table_widget.rowCount()
+        table_widget.insertRow(row_position)
+
+        # Заполняем строку значениями из values_list
+        for column, item in enumerate(values_list):
+            table_widget.setItem(row_position, column, QTableWidgetItem(str(item)))
     def closeEvent(self, event):
         self.save_table_data(self.ui.tableWidget_4, 'table_I')
         self.save_table_data(self.ui.tableWidget_5, 'table_II')
