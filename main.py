@@ -181,10 +181,10 @@ class MainWindow(QMainWindow):
         self.login_form.show()
 
     def closeEvent(self, event):
-        self.save_table_data(self.ui.tableWidget_4, 'table_data_4')
-        self.save_table_data(self.ui.tableWidget_5, 'table_data_5')
-        self.save_table_data(self.ui.tableWidget_6, 'table_data_6')
-        self.save_table_data(self.ui.tableWidget_7, 'table_data_7')
+        self.save_table_data(self.ui.tableWidget_4, 'table_I')
+        self.save_table_data(self.ui.tableWidget_5, 'table_II')
+        self.save_table_data(self.ui.tableWidget_6, 'table_III')
+        self.save_table_data(self.ui.tableWidget_7, 'table_IV')
         self.conn.close()
         super().closeEvent(event)
 
