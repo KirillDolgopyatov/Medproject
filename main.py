@@ -1,8 +1,7 @@
 import sqlite3
 import sys
 
-from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QTableWidgetItem
+from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget
 from PyQt5.uic.properties import QtWidgets
 
 from form import Ui_Form
@@ -10,8 +9,6 @@ from med import Ui_MainWindow
 
 
 class Form(QWidget):
-    patient_data_signal = pyqtSignal(list)
-
     def __init__(self):
         super().__init__()
         self.ui = Ui_Form()
@@ -89,9 +86,6 @@ class Form(QWidget):
         elif aries_affect == 3:
             sum_bal += 1
 
-        if sum_bal > 10:
-            self.patient_data_signal.emit(values_list)
-
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -120,16 +114,6 @@ class MainWindow(QMainWindow):
         self.conn.commit()
 
         self.load_data_from_sqlite()
-
-        self.login_form = Form()
-        self.login_form.patient_data_signal.connect(self.add_patient_to_table)
-
-    def add_patient_to_table(self, patient_data):
-        table = self.ui.tableWidget_4
-        row_position = table.rowCount()
-        table.insertRow(row_position)
-        for column, item in enumerate(patient_data):
-            table.setItem(row_position, column, QTableWidgetItem(str(item)))
 
     def save_table_data(self, tableWidget, table_name):
         rowCount = tableWidget.rowCount()
@@ -175,9 +159,7 @@ class MainWindow(QMainWindow):
         connection.close()
 
     def openLoginForm(self):
-        if self.login_form is None:
-            self.login_form = Form()
-            self.login_form.patient_data_signal.connect(self.add_patient_to_table)
+        self.login_form = Form()
         self.login_form.show()
 
     def closeEvent(self, event):
