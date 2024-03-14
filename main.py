@@ -12,6 +12,7 @@ class Form(QWidget):
     def __init__(self):
         super().__init__()
         self.ui = Ui_Form()
+        self.main_window = Ui_MainWindow()
         self.ui.setupUi(self)
         self.ui.dateTimeEdit.setCalendarPopup(True)
         self.ui.pushButton.clicked.connect(self.add_patient)
@@ -87,13 +88,18 @@ class Form(QWidget):
             sum_bal += 1
 
         if sum_bal > 21:
-            pass
-        elif 16 >= sum_bal <= 21:
-            pass
-        elif 6 >= sum_bal <= 15:
-            pass
-        elif 0 >= sum_bal <= 5:
-            pass
+            target_table = self.main_window.tableWidget_4
+        elif 16 <= sum_bal <= 21:
+            target_table = self.main_window.tableWidget_5
+        elif 6 <= sum_bal <= 15:
+            target_table = self.main_window.tableWidget_6
+        elif 0 <= sum_bal <= 5:
+            target_table = self.main_window.tableWidget_7
+
+            row_position = target_table.rowCount()
+            target_table.insertRow(row_position)
+            for column, item in enumerate(values_list):
+                target_table.setItem(row_position, column, QtWidgets.QTableWidgetItem(str(item)))
 
 
 class MainWindow(QMainWindow):
