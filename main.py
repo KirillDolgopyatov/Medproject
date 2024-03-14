@@ -17,7 +17,83 @@ class Form(QWidget):
         self.ui.pushButton.clicked.connect(self.add_patient)
 
     def add_patient(self):
-        pass
+        values_list = [
+            self.ui.lineEdit.text(),  # ФИО
+            self.ui.dateTimeEdit.text(),  # Дата и время
+            self.ui.lineEdit_3.text(),  # Возраст
+            self.ui.lineEdit_4.text(),  # Адрес
+            self.ui.lineEdit_5.text(),  # Номер ЧД
+            self.ui.comboBox.currentText(),  # Значение avpu
+            self.ui.lineEdit_8.text(),  # Значение spo2
+            self.ui.comboBox_2.currentText()  # Значение aries_affect
+        ]
+
+        sum_bal = 0
+
+        ad = self.ui.lineEdit_4.text()
+        if ad.isdigit():
+            value = int(ad)
+            if value >= 90:
+                sum_bal += 4
+            elif 76 <= value <= 89:
+                sum_bal += 3
+            elif 50 <= value <= 75:
+                sum_bal += 2
+            elif 1 <= value <= 49:
+                sum_bal += 1
+
+        chd = self.ui.lineEdit_5.text()
+        if chd.isdigit():
+            value1 = int(chd)
+            if 10 <= value1 <= 30:
+                sum_bal += 4
+            elif value1 > 30:
+                sum_bal += 3
+            elif 6 <= value1 <= 9:
+                sum_bal += 2
+            elif 1 <= value1 <= 5:
+                sum_bal += 1
+
+        avpu = self.ui.comboBox.currentIndex()
+        if avpu == 0:
+            sum_bal += 4
+        elif avpu == 1:
+            sum_bal += 3
+        elif avpu == 2:
+            sum_bal += 2
+        elif avpu == 3:
+            sum_bal += 1
+
+        spo2 = self.ui.lineEdit_8.text()
+        if spo2.isdigit():
+            value2 = int(spo2)
+            if value2 > 96:
+                sum_bal += 4
+            elif 94 <= value2 <= 96:
+                sum_bal += 3
+            elif 90 <= value2 <= 94:
+                sum_bal += 2
+            elif value2 < 90:
+                sum_bal += 1
+
+        aries_affect = self.ui.comboBox_2.currentIndex()
+        if aries_affect == 0:
+            sum_bal += 6
+        elif aries_affect == 1:
+            sum_bal += 4
+        elif aries_affect == 2:
+            sum_bal += 3
+        elif aries_affect == 3:
+            sum_bal += 1
+
+        if sum_bal > 21:
+            pass
+        elif 16 >= sum_bal <= 21:
+            pass
+        elif 6 >= sum_bal <= 15:
+            pass
+        elif 0 >= sum_bal <= 5:
+            pass
 
 
 class MainWindow(QMainWindow):
