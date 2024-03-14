@@ -90,6 +90,7 @@ class Form(QWidget):
             sum_bal += 1
 
         self.data_updated.emit(sum_bal, values_list)  # Отправляем сигнал с данными
+        self.close()
 
 
 class MainWindow(QMainWindow):
@@ -121,6 +122,7 @@ class MainWindow(QMainWindow):
         self.load_data_from_sqlite()
 
     def save_table_data(self, tableWidget, table_name):
+        self.cursor.execute(f'DELETE FROM {table_name};')  # Очистка таблицы перед вставкой новых данных
         rowCount = tableWidget.rowCount()
         columnCount = tableWidget.columnCount()
         for row in range(rowCount):
@@ -133,15 +135,14 @@ class MainWindow(QMainWindow):
                     row_data.append("")
             # Сохраняем строку данных в базу данных
             placeholders = ', '.join(['?'] * len(row_data))
+
             self.cursor.execute(f"INSERT INTO {table_name} VALUES (NULL, {placeholders})", row_data)
         self.conn.commit()
 
     def load_data_from_sqlite(self):
-        # Подключение к базе данных
         connection = sqlite3.connect('patients_data.db')
         cursor = connection.cursor()
 
-        # Словарь для сопоставления имен таблиц с виджетами таблиц в UI
         table_widgets = {
             'table_I': self.ui.tableWidget_4,
             'table_II': self.ui.tableWidget_5,
@@ -152,14 +153,12 @@ class MainWindow(QMainWindow):
         for table_name, table_widget in table_widgets.items():
             cursor.execute(f"SELECT * FROM {table_name}")
             rows = cursor.fetchall()
-            table_widget.setRowCount(0)  # Очистка таблицы перед заполнением
+            table_widget.setRowCount(len(rows))  # Устанавливаем количество строк равное количеству записей
 
-            for row in rows:
-                row_position = table_widget.rowCount()
-                table_widget.insertRow(row_position)
-                for column, item in enumerate(row):
-                    table_widget.setItem(row_position, column, QTableWidgetItem(str(item)))
-        # Закрытие соединения с базой данных
+            for row_index, row in enumerate(rows):
+                for column_index, item in enumerate(row):
+                    table_widget.setItem(row_index, column_index, QTableWidgetItem(str(item)))
+
         connection.close()
 
     def openLoginForm(self):
