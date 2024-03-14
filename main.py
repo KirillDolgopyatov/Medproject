@@ -1,6 +1,7 @@
 import sqlite3
 import sys
 
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget
 from PyQt5.uic.properties import QtWidgets
 
@@ -9,6 +10,8 @@ from med import Ui_MainWindow
 
 
 class Form(QWidget):
+    data_updated = pyqtSignal(int, list)  # Сигнал для передачи sum_bal и values_list
+
     def __init__(self):
         super().__init__()
         self.ui = Ui_Form()
@@ -86,6 +89,8 @@ class Form(QWidget):
         elif aries_affect == 3:
             sum_bal += 1
 
+        self.data_updated.emit(sum_bal, values_list)  # Отправляем сигнал с данными
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -160,7 +165,12 @@ class MainWindow(QMainWindow):
 
     def openLoginForm(self):
         self.login_form = Form()
+        self.login_form.data_updated.connect(self.handle_data)  # Подключаем сигнал к слоту
         self.login_form.show()
+
+    def handle_data(self, sum_bal, values_list):
+        # Здесь вы можете использовать sum_bal и values_list как нужно
+        print(sum_bal, values_list)  # Пример использования
 
     def closeEvent(self, event):
         self.save_table_data(self.ui.tableWidget_4, 'table_I')
