@@ -1,7 +1,7 @@
 import sqlite3
 import sys
 
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget
+from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QTableWidgetItem
 from PyQt5.uic.properties import QtWidgets
 
 from form import Ui_Form
@@ -28,9 +28,26 @@ class Form(QWidget):
             self.ui.lineEdit_8.text(),  # Значение spo2
             self.ui.comboBox_2.currentText()  # Значение aries_affect
         ]
+        sum_bal = self.calculate_sum_bal()
 
+        # Determine the target table based on sum_bal
+        if sum_bal > 21:
+            target_table = self.main_window.tableWidget_4
+        elif 16 <= sum_bal <= 21:
+            target_table = self.main_window.tableWidget_5
+        elif 6 <= sum_bal <= 15:
+            target_table = self.main_window.tableWidget_6
+        elif 0 <= sum_bal <= 5:
+            target_table = self.main_window.tableWidget_7
+
+        # Add the values to the target table
+        row_position = target_table.rowCount()
+        target_table.insertRow(row_position)
+        for column, item in enumerate(values_list):
+            target_table.setItem(row_position, column, QTableWidgetItem(str(item)))
+
+    def calculate_sum_bal(self):
         sum_bal = 0
-
         ad = self.ui.lineEdit_4.text()
         if ad.isdigit():
             value = int(ad)
@@ -87,19 +104,7 @@ class Form(QWidget):
         elif aries_affect == 3:
             sum_bal += 1
 
-        if sum_bal > 21:
-            target_table = self.main_window.tableWidget_4
-        elif 16 <= sum_bal <= 21:
-            target_table = self.main_window.tableWidget_5
-        elif 6 <= sum_bal <= 15:
-            target_table = self.main_window.tableWidget_6
-        elif 0 <= sum_bal <= 5:
-            target_table = self.main_window.tableWidget_7
-
-            row_position = target_table.rowCount()
-            target_table.insertRow(row_position)
-            for column, item in enumerate(values_list):
-                target_table.setItem(row_position, column, QtWidgets.QTableWidgetItem(str(item)))
+        return sum_bal
 
 
 class MainWindow(QMainWindow):
