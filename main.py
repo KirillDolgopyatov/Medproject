@@ -158,8 +158,7 @@ class MainWindow(QMainWindow):
                 row_position = table_widget.rowCount()
                 table_widget.insertRow(row_position)
                 for column, item in enumerate(row):
-                    table_widget.setItem(row_position, column, QtWidgets.QTableWidgetItem(str(item)))
-
+                    table_widget.setItem(row_position, column, QTableWidgetItem(str(item)))
         # Закрытие соединения с базой данных
         connection.close()
 
@@ -186,6 +185,7 @@ class MainWindow(QMainWindow):
         # Заполняем строку значениями из values_list
         for column, item in enumerate(values_list):
             table_widget.setItem(row_position, column, QTableWidgetItem(str(item)))
+
     def closeEvent(self, event):
         self.save_table_data(self.ui.tableWidget_4, 'table_I')
         self.save_table_data(self.ui.tableWidget_5, 'table_II')
